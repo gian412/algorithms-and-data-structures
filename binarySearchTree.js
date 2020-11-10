@@ -8,12 +8,12 @@ class Node {
   }
 }
 
-class BST {
-  
+export class BST {
+
   constructor() {
     this.root = null;
   }
-  
+
   add(data) {
     const node = this.root;
     if (node === null) {
@@ -39,7 +39,7 @@ class BST {
     }
     return searchTree(node);
   }
-  
+
   findMin() {
     let current = this.root;
     while (current.left !== null) {
@@ -47,7 +47,7 @@ class BST {
     }
     return current;
   }
-  
+
   findMax() {
     let current = this.root;
     while (current.right !== null) {
@@ -55,7 +55,7 @@ class BST {
     }
     return current;
   }
-  
+
   find(data) {
     let current = this.root;
     while (current.data !== data) {
@@ -68,7 +68,7 @@ class BST {
     }
     return current;
   }
-  
+
   isPresent(data) {
     let current = this.root;
     while (current) {
@@ -81,7 +81,7 @@ class BST {
     }
     return false;
   }
-  
+
   remove(data) {
     const removeNode = (node, data) => {
       if (node == null) return null;
@@ -110,4 +110,85 @@ class BST {
     }
     this.root = removeNode(this.root, data);
   }
+
+  findMinHeight(node = this.root) {
+    if (node == null) return -1;
+    let left = this.findMinHeight(node.left);
+    let right = this.findMinHeight(node.right);
+    if (left < right) {
+      return left + 1;
+    } else {
+      return right + 1;
+    }
+  }
+
+  findMaxHeight(node = this.root) {
+    if (node == null) return -1;
+    let left = this.findMaxHeight(node.left);
+    let right = this.findMaxHeight(node.right);
+    if (left > right) {
+      return left + 1;
+    } else {
+      return right - 1;
+    }
+  }
+
+  isBalanced() {
+    return (this.findMinHeight() >= this.findMaxHeight() - 1);
+  }
+
+  inOrder() {
+    if (this.root == null) return null;
+    let result = []
+    function traverseInOrder(node) {
+      if (node.left) traverseInOrder(node.left);
+      result.push(node.data);
+      if (node.right) traverseInOrder(node.right);
+    }
+    traverseInOrder(this.root);
+    return result;
+  }
+
+  preOrder() {
+    if (this.root == null) return null;
+    let result = []
+    function traversePreOrder(node) {
+      result.push(node.data);
+      if (node.left) traversePreOrder(node.left);
+      if (node.right) traversePreOrder(node.right);
+    }
+    traversePreOrder(this.root);
+    return result;
+  }
+
+  postOrder() {
+    if (this.root == null) return null;
+    let result = []
+    function traversePostOrder(node) {
+      if (node.left) traversePostOrder(node.left);
+      if (node.right) traversePostOrder(node.right);
+      result.push(node.data);
+    }
+    traversePostOrder(this.root);
+    return result;
+  }
+
+  levelOrder() {
+    let result = [];
+    let Q = [];
+    if (this.root == null) return null;
+    Q.push(this.root);
+    while (Q.length > 0) {
+      let node = Q.shift();
+      result.push(node.data);
+      if (node.left != null) {
+        Q.push(node.left);
+      }
+      if (node.right != null) {
+        Q.push(node.right);
+      }
+    }
+    return result;
+  }
+
 }
