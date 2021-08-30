@@ -1,4 +1,4 @@
-# js-algorithms-and-data-structures
+# Algorithms and data structures
 
 A collection of Data Structures and Algorithms in JavaScript
 
